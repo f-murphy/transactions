@@ -1,0 +1,23 @@
+services:
+  database:
+    container_name: database
+    image: 'postgres'
+    ports:
+      - "5432:5432"
+    env_file:
+      - "./.env" 
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  bank:
+    build: ./
+    ports:
+      - 8080:8080
+    depends_on:
+      database:
+        condition: service_healthy
+    env_file:
+      - "./.env"
