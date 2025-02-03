@@ -11,9 +11,6 @@ COPY ./ ./
 RUN go mod download
 RUN go build -o bank ./cmd/main.go
 
-COPY migrations/ ./migrations/
-COPY entrypoint.sh ./
-
 RUN chmod +x entrypoint.sh
 
 CMD ["./entrypoint.sh"]
